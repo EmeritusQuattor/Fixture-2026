@@ -1,7 +1,6 @@
 package com.mundial.dao;
 
 import com.mundial.db.ConnectionManager;
-import com.mundial.model.Group;
 import com.mundial.model.Team;
 
 import java.sql.*;
@@ -46,7 +45,10 @@ public class TeamDAO implements CrudDAO<Team> {
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, id);
         ResultSet result = statement.executeQuery();
-        if (result.next()) return new Group(result)
+        if (result.next()) {
+            return new Team(result.getInt("id"), result.getString("nombre"),
+                    result.getString("pais"), result.getInt("grupo_id"));
+        }
         return null;
     }
 }
